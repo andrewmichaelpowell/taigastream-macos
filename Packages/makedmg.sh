@@ -62,6 +62,7 @@ xcodebuild -exportArchive \
 	-archivePath "$ARCHIVE" \
 	-exportPath "$EXPORT" \
 	-exportOptionsPlist "$BUILD/exportOptions.plist" \
+	-allowProvisioningUpdates \
 	-quiet
 
 mkdir -p "$STAGING"
