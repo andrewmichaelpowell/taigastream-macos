@@ -9,6 +9,7 @@ struct MainView: View {
 
 	var body: some View {
 		List {
+			edgeSpacer
 			ForEach(Array(streamInfo.stations.enumerated()), id: \.element.id) {
 				index,
 				station in
@@ -37,8 +38,20 @@ struct MainView: View {
 			.onMove { source, destination in
 				streamInfo.moveStation(from: source, to: destination)
 			}
+			edgeSpacer
 		}
 		.listStyle(.plain)
 		.scrollContentBackground(.hidden)
+		.environment(\.defaultMinListRowHeight, 0)
+	}
+
+	private var edgeSpacer: some View {
+		Color.clear
+			.frame(height: 5)
+			.listRowInsets(EdgeInsets())
+			.listRowSeparator(.hidden)
+			.moveDisabled(true)
+			.deleteDisabled(true)
+			.accessibilityHidden(true)
 	}
 }
