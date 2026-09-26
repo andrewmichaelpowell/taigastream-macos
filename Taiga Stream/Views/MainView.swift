@@ -43,6 +43,10 @@ struct MainView: View {
 		.listStyle(.plain)
 		.scrollContentBackground(.hidden)
 		.environment(\.defaultMinListRowHeight, 0)
+		.modifier(HardTopScrollEdge())
+		.toolbar {
+			TitleBarToolbar()
+		}
 	}
 
 	private var edgeSpacer: some View {
@@ -53,5 +57,33 @@ struct MainView: View {
 			.moveDisabled(true)
 			.deleteDisabled(true)
 			.accessibilityHidden(true)
+	}
+}
+
+private struct TitleBarToolbar: ToolbarContent {
+	@ToolbarContentBuilder
+	var body: some ToolbarContent {
+		if #available(macOS 26.0, *) {
+			ToolbarItem(placement: .navigation) {
+				Image(systemName: "chevron.left")
+					.hidden()
+			}
+			.sharedBackgroundVisibility(.hidden)
+		} else {
+			ToolbarItem(placement: .navigation) {
+				Image(systemName: "chevron.left")
+					.hidden()
+			}
+		}
+	}
+}
+
+private struct HardTopScrollEdge: ViewModifier {
+	func body(content: Content) -> some View {
+		if #available(macOS 26.0, *) {
+			content.scrollEdgeEffectStyle(.hard, for: .top)
+		} else {
+			content
+		}
 	}
 }
