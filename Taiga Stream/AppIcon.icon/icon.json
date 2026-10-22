@@ -1,76 +1,52 @@
 {
-  "fill": "automatic",
-  "groups": [
+  "fill" : {
+    "linear-gradient" : [
+      "srgb:0.30196,0.48235,0.15686,1.00000",
+      "srgb:0.24706,0.40000,0.12941,1.00000"
+    ],
+    "orientation" : {
+      "start" : { "x" : 0.5, "y" : 0 },
+      "stop" : { "x" : 0.5, "y" : 1 }
+    }
+  },
+  "fill-specializations" : [
     {
-      "layers": [
+      "appearance" : "dark",
+      "value" : "automatic"
+    }
+  ],
+  "groups" : [
+    {
+      "layers" : [
         {
-          "name": "Any",
-          "image-name": "Any.png",
-          "glass": false,
-          "hidden-specializations": [
-            {
-              "value": false
-            },
-            {
-              "appearance": "dark",
-              "value": true
-            },
-            {
-              "appearance": "tinted",
-              "value": true
-            }
-          ]
-        },
-        {
-          "name": "Dark",
-          "image-name": "Dark.png",
-          "glass": false,
-          "hidden-specializations": [
-            {
-              "value": true
-            },
-            {
-              "appearance": "dark",
-              "value": false
-            },
-            {
-              "appearance": "tinted",
-              "value": true
-            }
-          ]
-        },
-        {
-          "name": "Tinted",
-          "image-name": "Tinted.png",
-          "glass": false,
-          "hidden-specializations": [
-            {
-              "value": true
-            },
-            {
-              "appearance": "dark",
-              "value": true
-            },
-            {
-              "appearance": "tinted",
-              "value": false
-            }
+          "image-name" : "Bars.png",
+          "name" : "Bars",
+          "fill-specializations" : [
+            { "value" : { "solid" : "srgb:1.00000,1.00000,1.00000,1.00000" } },
+            { "appearance" : "dark", "value" : { "solid" : "srgb:0.38039,0.70196,0.21176,1.00000" } }
           ]
         }
       ],
-      "shadow": {
-        "kind": "neutral",
-        "opacity": 0.5
-      },
-      "translucency": {
-        "enabled": false,
-        "value": 0.5
-      }
+      "shadow" : { "kind" : "neutral", "opacity" : 0.5 },
+      "translucency" : { "enabled" : true, "value" : 0.4 }
+    },
+    {
+      "layers" : [
+        {
+          "image-name" : "Headphones.png",
+          "name" : "Headphones",
+          "fill-specializations" : [
+            { "value" : { "solid" : "srgb:1.00000,1.00000,1.00000,1.00000" } },
+            { "appearance" : "dark", "value" : { "solid" : "srgb:0.38039,0.70196,0.21176,1.00000" } }
+          ]
+        }
+      ],
+      "shadow" : { "kind" : "neutral", "opacity" : 0.5 },
+      "translucency" : { "enabled" : true, "value" : 0.4 }
     }
   ],
-  "supported-platforms": {
-    "squares": [
-      "macOS"
-    ]
+  "supported-platforms" : {
+    "circles" : [ "watchOS" ],
+    "squares" : "shared"
   }
 }
