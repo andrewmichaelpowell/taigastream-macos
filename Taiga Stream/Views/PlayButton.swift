@@ -23,7 +23,7 @@ struct PlayButton: View {
 		}) {
 			ZStack {
 				Circle()
-					.fill(isPlaying ? Color(.mint) : Color.slot)
+					.fill(isPlaying ? Color(red: 90 / 255, green: 120 / 255, blue: 60 / 255) : Color.slot)
 				if isPlaying {
 					Text(Image(systemName: "stop.fill"))
 						.font(.title3)
