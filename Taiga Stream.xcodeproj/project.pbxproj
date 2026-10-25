@@ -461,7 +461,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 2026.10.30;
+				MARKETING_VERSION = 2026.10.24;
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.andrewmichaelpowell.taigastream;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -497,7 +497,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 2026.10.30;
+				MARKETING_VERSION = 2026.10.24;
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.andrewmichaelpowell.taigastream;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -532,7 +532,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 2026.10.30;
+				MARKETING_VERSION = 2026.10.24;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.andrewmichaelpowell.taigastream.Taiga-Stream-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -567,7 +567,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 2026.10.30;
+				MARKETING_VERSION = 2026.10.24;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.andrewmichaelpowell.taigastream.Taiga-Stream-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
