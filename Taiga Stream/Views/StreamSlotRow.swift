@@ -34,10 +34,7 @@ struct StreamSlotRow: View {
 			}
 			.padding()
 			.frame(maxWidth: .infinity, minHeight: 56, alignment: .leading)
-			.background(
-				RoundedRectangle(cornerRadius: 10)
-					.fill(Color.slot)
-			)
+			.background(RoundedRectangle(cornerRadius: 10).fill(Color.slot))
 		}
 		.buttonStyle(.plain)
 		.sheet(isPresented: $showingOptions) {

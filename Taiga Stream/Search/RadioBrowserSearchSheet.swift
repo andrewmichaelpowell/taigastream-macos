@@ -33,10 +33,7 @@ struct RadioBrowserSearchSheet: View {
 							}
 					}
 					.padding()
-					.background(
-						RoundedRectangle(cornerRadius: 10)
-							.fill(Color.slot)
-					)
+					.background(RoundedRectangle(cornerRadius: 10).fill(Color.slot))
 
 					Button(action: performSearch) {
 						HStack {
@@ -57,12 +54,9 @@ struct RadioBrowserSearchSheet: View {
 							Spacer()
 						}
 						.padding()
-						.background(
-							RoundedRectangle(cornerRadius: 10)
-								.fill(Color.slot)
-						)
+						.sheetButtonBackground()
 					}
-					.buttonStyle(.plain)
+					.sheetButtonStyle()
 					.disabled(isLoading || searchName.isEmpty)
 
 					Button(action: { isPresented = false }) {
@@ -74,12 +68,9 @@ struct RadioBrowserSearchSheet: View {
 							Spacer()
 						}
 						.padding()
-						.background(
-							RoundedRectangle(cornerRadius: 10)
-								.fill(Color.slot)
-						)
+						.sheetButtonBackground()
 					}
-					.buttonStyle(.plain)
+					.sheetButtonStyle()
 				}
 				.padding()
 				if hasSearched && results.isEmpty && !isLoading {

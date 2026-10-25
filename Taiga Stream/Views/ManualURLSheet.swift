@@ -40,10 +40,7 @@ struct ManualURLSheet: View {
 							.autocorrectionDisabled()
 					}
 					.padding()
-					.background(
-						RoundedRectangle(cornerRadius: 10)
-							.fill(Color.slot)
-					)
+					.background(RoundedRectangle(cornerRadius: 10).fill(Color.slot))
 					HStack {
 						Image(systemName: "link")
 							.foregroundColor(
@@ -55,10 +52,7 @@ struct ManualURLSheet: View {
 							.onSubmit { save() }
 					}
 					.padding()
-					.background(
-						RoundedRectangle(cornerRadius: 10)
-							.fill(Color.slot)
-					)
+					.background(RoundedRectangle(cornerRadius: 10).fill(Color.slot))
 
 					Button(action: save) {
 						HStack {
@@ -73,12 +67,9 @@ struct ManualURLSheet: View {
 							Spacer()
 						}
 						.padding()
-						.background(
-							RoundedRectangle(cornerRadius: 10)
-								.fill(Color.slot)
-						)
+						.sheetButtonBackground()
 					}
-					.buttonStyle(.plain)
+					.sheetButtonStyle()
 					.disabled(!isValidUrl)
 
 					Button(action: { isPresented = false }) {
@@ -90,12 +81,9 @@ struct ManualURLSheet: View {
 							Spacer()
 						}
 						.padding()
-						.background(
-							RoundedRectangle(cornerRadius: 10)
-								.fill(Color.slot)
-						)
+						.sheetButtonBackground()
 					}
-					.buttonStyle(.plain)
+					.sheetButtonStyle()
 				}
 				.padding()
 				Spacer()
