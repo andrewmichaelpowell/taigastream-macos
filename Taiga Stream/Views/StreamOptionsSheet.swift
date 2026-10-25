@@ -65,8 +65,11 @@ struct StreamOptionsSheet: View {
 				Spacer()
 			}
 			.padding()
-			.sheetButtonBackground()
+			.background(
+				RoundedRectangle(cornerRadius: 10)
+					.fill(Color.slot)
+			)
 		}
-		.sheetButtonStyle()
+		.buttonStyle(.plain)
 	}
 }
