@@ -19,12 +19,13 @@
     {
       "layers" : [
         {
-          "image-name" : "Bars.png",
+          "image-name" : "Bars.svg",
           "name" : "Bars",
           "fill-specializations" : [
             { "value" : { "solid" : "srgb:1.00000,1.00000,1.00000,1.00000" } },
             { "appearance" : "dark", "value" : { "solid" : "srgb:0.38039,0.70196,0.21176,1.00000" } }
-          ]
+          ],
+          "opacity" : 0.7
         }
       ],
       "shadow" : { "kind" : "neutral", "opacity" : 0.5 },
@@ -33,7 +34,22 @@
     {
       "layers" : [
         {
-          "image-name" : "Headphones.png",
+          "image-name" : "Caps.svg",
+          "name" : "Caps",
+          "fill-specializations" : [
+            { "value" : { "solid" : "srgb:1.00000,1.00000,1.00000,1.00000" } },
+            { "appearance" : "dark", "value" : { "solid" : "srgb:0.38039,0.70196,0.21176,1.00000" } }
+          ],
+          "opacity" : 0.85
+        }
+      ],
+      "shadow" : { "kind" : "neutral", "opacity" : 0.5 },
+      "translucency" : { "enabled" : true, "value" : 0.4 }
+    },
+    {
+      "layers" : [
+        {
+          "image-name" : "Headphones.svg",
           "name" : "Headphones",
           "fill-specializations" : [
             { "value" : { "solid" : "srgb:1.00000,1.00000,1.00000,1.00000" } },
