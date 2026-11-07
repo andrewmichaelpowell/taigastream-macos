@@ -30,9 +30,9 @@ struct PlayButton: View {
 					.fill(
 						isPlaying
 							? Color(
-								red: 84 / 255,
-								green: 117 / 255,
-								blue: 50 / 255
+								red: 4 / 255,
+								green: 80 / 255,
+								blue: 48 / 255
 							) : Color.slot
 					)
 				if isPlaying {
