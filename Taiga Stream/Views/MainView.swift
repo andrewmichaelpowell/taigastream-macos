@@ -38,6 +38,22 @@ struct MainView: View {
 			.onMove { source, destination in
 				streamInfo.moveStation(from: source, to: destination)
 			}
+			HStack {
+				Spacer()
+				StreamSlotRow(
+					index: streamInfo.stations.count,
+					isAddButton: true
+				)
+				.environmentObject(streamInfo)
+				Spacer()
+			}
+			.frame(minHeight: 56)
+			.listRowInsets(
+				EdgeInsets(top: 16, leading: 16, bottom: 4, trailing: 16)
+			)
+			.listRowSeparator(.hidden)
+			.moveDisabled(true)
+			.deleteDisabled(true)
 			edgeSpacer
 		}
 		.listStyle(.plain)

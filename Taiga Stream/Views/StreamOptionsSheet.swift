@@ -13,7 +13,7 @@ struct StreamOptionsSheet: View {
 	@Binding var manualName: String
 	@EnvironmentObject var streamInfo: StreamInfo
 
-	var station: RadioStation { streamInfo.stations[index] }
+	var station: RadioStation { streamInfo.station(at: index) }
 
 	var body: some View {
 		NavigationStack {
@@ -34,7 +34,7 @@ struct StreamOptionsSheet: View {
 				}
 				if !station.url.isEmpty {
 					optionButton("Clear", role: .destructive) {
-						streamInfo.saveStation(.empty, at: index)
+						streamInfo.clearStation(at: index)
 						isPresented = false
 					}
 				}

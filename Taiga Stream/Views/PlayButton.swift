@@ -8,13 +8,17 @@ struct PlayButton: View {
 	let streamNumber: Int
 	@ObservedObject var streamInfo = StreamInfo.shared
 
+	private var url: String {
+		streamInfo.station(at: streamNumber - 1).url
+	}
+
 	private var isPlaying: Bool {
 		streamInfo.isPlaying && streamInfo.currentStream == streamNumber
-			&& streamInfo.stream[streamNumber - 1] != ""
+			&& !url.isEmpty
 	}
 
 	private var isConfigured: Bool {
-		streamInfo.stream[streamNumber - 1] == ""
+		url.isEmpty
 	}
 
 	var body: some View {
@@ -23,7 +27,14 @@ struct PlayButton: View {
 		}) {
 			ZStack {
 				Circle()
-					.fill(isPlaying ? Color(red: 84 / 255, green: 117 / 255, blue: 50 / 255) : Color.slot)
+					.fill(
+						isPlaying
+							? Color(
+								red: 84 / 255,
+								green: 117 / 255,
+								blue: 50 / 255
+							) : Color.slot
+					)
 				if isPlaying {
 					Text(Image(systemName: "stop.fill"))
 						.font(.title3)
