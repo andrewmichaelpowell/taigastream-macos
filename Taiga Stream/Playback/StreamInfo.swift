@@ -37,6 +37,7 @@ public class StreamInfo: NSObject, ObservableObject {
 	private static let legacySlotCount = 32
 
 	@Published var stations: [RadioStation] = StreamInfo.loadStations()
+	@Published private(set) var nowPlayingArtwork: NSImage?
 
 	var stream: [String] { stations.map(\.url) }
 
@@ -93,7 +94,8 @@ public class StreamInfo: NSObject, ObservableObject {
 	}
 
 	private func syncCurrentStream() {
-		guard isPlaying, let playingUrl = currentStreamUrl?.absoluteString
+		guard isPlaying, !PodcastPlayer.shared.isActive,
+			let playingUrl = currentStreamUrl?.absoluteString
 		else { return }
 		if let index = stations.firstIndex(where: { $0.url == playingUrl }) {
 			currentStream = index + 1
@@ -222,6 +224,10 @@ public class StreamInfo: NSObject, ObservableObject {
 		commandCenter.playCommand.isEnabled = true
 		commandCenter.playCommand.addTarget { [weak self] _ in
 			guard let self else { return .commandFailed }
+			if PodcastPlayer.shared.isActive {
+				Task { await PodcastPlayer.shared.resume() }
+				return .success
+			}
 			self.audioPlayer.play()
 			if let streamUrl = self.currentStreamUrl {
 				self.startPlaybackHeartbeat()
@@ -241,6 +247,10 @@ public class StreamInfo: NSObject, ObservableObject {
 
 		commandCenter.stopCommand.isEnabled = true
 		commandCenter.stopCommand.addTarget { [weak self] _ in
+			if PodcastPlayer.shared.isActive {
+				PodcastPlayer.shared.pause()
+				return .success
+			}
 			self?.audioPlayer.pause()
 			self?.stopPlaybackHeartbeat()
 			self?.stopMetadataPolling()
@@ -251,6 +261,10 @@ public class StreamInfo: NSObject, ObservableObject {
 		commandCenter.togglePlayPauseCommand.isEnabled = true
 		commandCenter.togglePlayPauseCommand.addTarget { [weak self] _ in
 			guard let self else { return .commandFailed }
+			if PodcastPlayer.shared.isActive {
+				Task { await PodcastPlayer.shared.togglePlayPause() }
+				return .success
+			}
 			if self.isPlaying {
 				self.audioPlayer.pause()
 				self.stopPlaybackHeartbeat()
@@ -281,6 +295,10 @@ public class StreamInfo: NSObject, ObservableObject {
 		commandCenter.pauseCommand.isEnabled = true
 		commandCenter.pauseCommand.addTarget { [weak self] _ in
 			guard let self else { return .commandFailed }
+			if PodcastPlayer.shared.isActive {
+				PodcastPlayer.shared.pause()
+				return .success
+			}
 			self.audioPlayer.pause()
 			self.stopPlaybackHeartbeat()
 			self.stopMetadataPolling()
@@ -289,15 +307,17 @@ public class StreamInfo: NSObject, ObservableObject {
 		}
 
 		commandCenter.skipForwardCommand.isEnabled = false
-		commandCenter.skipForwardCommand.preferredIntervals = []
 		commandCenter.skipBackwardCommand.isEnabled = false
-		commandCenter.skipBackwardCommand.preferredIntervals = []
 		commandCenter.nextTrackCommand.isEnabled = false
 		commandCenter.previousTrackCommand.isEnabled = false
 		commandCenter.changePlaybackPositionCommand.isEnabled = false
 	}
 
 	func updateNowPlaying(artist: String = "", title: String = "") {
+		if PodcastPlayer.shared.isActive {
+			PodcastPlayer.shared.updateNowPlaying()
+			return
+		}
 		let existingArtwork = MPNowPlayingInfoCenter.default().nowPlayingInfo?[
 			MPMediaItemPropertyArtwork
 		]
@@ -317,6 +337,10 @@ public class StreamInfo: NSObject, ObservableObject {
 	}
 
 	private func updatePlaybackState() {
+		if PodcastPlayer.shared.isActive {
+			PodcastPlayer.shared.updateNowPlaying()
+			return
+		}
 		if var nowPlaying = MPNowPlayingInfoCenter.default().nowPlayingInfo {
 			nowPlaying[MPNowPlayingInfoPropertyPlaybackRate] =
 				isPlaying ? 1.0 : 0.0
@@ -327,6 +351,10 @@ public class StreamInfo: NSObject, ObservableObject {
 	}
 
 	func clearNowPlaying() {
+		if PodcastPlayer.shared.isActive {
+			PodcastPlayer.shared.updateNowPlaying()
+			return
+		}
 		var stoppedInfo = [String: Any]()
 		stoppedInfo[MPNowPlayingInfoPropertyIsLiveStream] = false
 		stoppedInfo[MPNowPlayingInfoPropertyPlaybackRate] = 0.0
@@ -863,6 +891,7 @@ public class StreamInfo: NSObject, ObservableObject {
 			return
 		}
 		lastKnownArtwork = image
+		showArtwork(image)
 		let artwork = Self.mediaArtwork(image)
 		if var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
 		{
@@ -871,8 +900,12 @@ public class StreamInfo: NSObject, ObservableObject {
 		}
 	}
 
+	func showArtwork(_ image: NSImage) {
+		if nowPlayingArtwork !== image { nowPlayingArtwork = image }
+	}
+
 	func setFallbackArtwork() {
-		guard !hasRealArtwork else { return }
+		guard !hasRealArtwork, !PodcastPlayer.shared.isActive else { return }
 		fallbackRequestID += 1
 		let requestID = fallbackRequestID
 

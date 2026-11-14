@@ -5,72 +5,82 @@ import Foundation
 import SwiftUI
 
 struct MainView: View {
-	@ObservedObject var streamInfo = StreamInfo.shared
+	@AppStorage("SelectedTab") private var selectedTab = MainTab.radio
+
+	enum MainTab: String {
+		case radio, podcasts
+	}
 
 	var body: some View {
-		List {
-			edgeSpacer
-			ForEach(Array(streamInfo.stations.enumerated()), id: \.element.id) {
-				index,
-				station in
-				HStack(spacing: 12) {
-					FaviconView(station: station)
-
-					StreamSlotRow(index: index)
-						.environmentObject(streamInfo)
-
-					PlayButton(streamNumber: index + 1)
-
-					Image(systemName: "line.3.horizontal")
-						.font(.system(size: 25))
-						.foregroundColor(Color(nsColor: .tertiaryLabelColor))
-						.frame(width: 32, height: 50)
-						.contentShape(Rectangle())
-				}
-				.frame(minHeight: 56)
-				.listRowInsets(
-					EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 0)
-				)
-				.listRowSeparator(.hidden)
-				.moveDisabled(false)
-				.deleteDisabled(true)
+		Group {
+			switch selectedTab {
+			case .radio: RadioView()
+			case .podcasts: PodcastsView()
 			}
-			.onMove { source, destination in
-				streamInfo.moveStation(from: source, to: destination)
-			}
-			HStack {
-				Spacer()
-				StreamSlotRow(
-					index: streamInfo.stations.count,
-					isAddButton: true
-				)
-				.environmentObject(streamInfo)
-				Spacer()
-			}
-			.frame(minHeight: 56)
-			.listRowInsets(
-				EdgeInsets(top: 16, leading: 16, bottom: 4, trailing: 16)
-			)
-			.listRowSeparator(.hidden)
-			.moveDisabled(true)
-			.deleteDisabled(true)
-			edgeSpacer
 		}
-		.listStyle(.plain)
-		.scrollContentBackground(.hidden)
-		.environment(\.defaultMinListRowHeight, 0)
+		.frame(maxWidth: .infinity, maxHeight: .infinity)
+		.safeAreaInset(edge: .bottom) {
+			PageChooser(selection: $selectedTab)
+				.padding(.bottom, 12)
+		}
+		.background { NowPlayingBackground() }
 		.toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
 		.toolbar(removing: .title)
 		.clipped()
 	}
+}
 
-	private var edgeSpacer: some View {
-		Color.clear
-			.frame(height: 5)
-			.listRowInsets(EdgeInsets())
-			.listRowSeparator(.hidden)
-			.moveDisabled(true)
-			.deleteDisabled(true)
-			.accessibilityHidden(true)
+private struct PageChooser: View {
+	@Binding var selection: MainView.MainTab
+
+	private static let itemWidth: CGFloat = 80
+	private static let itemHeight: CGFloat = 44
+	private static let inset: CGFloat = 4
+
+	var body: some View {
+		ZStack(alignment: .leading) {
+			Capsule()
+				.fill(Color.primary.opacity(0.1))
+				.frame(width: Self.itemWidth, height: Self.itemHeight)
+				.offset(x: selection == .radio ? 0 : Self.itemWidth)
+			HStack(spacing: 0) {
+				item(.radio, symbol: "radio.fill", label: Text("Radio"))
+				item(.podcasts, symbol: "mic.fill", label: Text("Podcasts"))
+			}
+		}
+		.padding(Self.inset)
+		.chooserBackground()
+		.animation(.snappy, value: selection)
+	}
+
+	private func item(
+		_ tab: MainView.MainTab,
+		symbol: String,
+		label: Text
+	) -> some View {
+		let isSelected = selection == tab
+		return Button {
+			selection = tab
+		} label: {
+			Image(systemName: symbol)
+				.font(.title2)
+				.foregroundStyle(isSelected ? Color.taigaGreenIcon : Color.primary)
+				.frame(width: Self.itemWidth, height: Self.itemHeight)
+				.contentShape(Capsule())
+		}
+		.buttonStyle(.plain)
+		.accessibilityLabel(label)
+		.accessibilityAddTraits(isSelected ? .isSelected : [])
+	}
+}
+
+extension View {
+	@ViewBuilder
+	fileprivate func chooserBackground() -> some View {
+		if #available(macOS 26.0, *) {
+			glassEffect(.regular.interactive(), in: Capsule())
+		} else {
+			background(.regularMaterial, in: Capsule())
+		}
 	}
 }

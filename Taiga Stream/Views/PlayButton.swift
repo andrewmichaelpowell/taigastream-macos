@@ -25,23 +25,12 @@ struct PlayButton: View {
 		Button(action: {
 			Task { await PlayStream.shared.play(streamNumber: streamNumber) }
 		}) {
-			ZStack {
-				Circle()
-					.fill(
-						isPlaying
-							? Color(
-								red: 4 / 255,
-								green: 80 / 255,
-								blue: 48 / 255
-							) : Color.slot
-					)
+			Group {
 				if isPlaying {
 					Text(Image(systemName: "stop.fill"))
-						.font(.title3)
 						.foregroundColor(.white)
 				} else {
 					Text("\(streamNumber)")
-						.font(.title3)
 						.foregroundColor(
 							isConfigured
 								? Color(nsColor: .quaternaryLabelColor)
@@ -49,7 +38,10 @@ struct PlayButton: View {
 						)
 				}
 			}
+			.font(.title3)
 			.frame(width: 50, height: 50)
+			.contentShape(Circle())
+			.circleGlass(isOn: isPlaying)
 		}
 		.buttonStyle(.plain)
 	}

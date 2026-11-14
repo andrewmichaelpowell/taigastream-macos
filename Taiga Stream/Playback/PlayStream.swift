@@ -11,6 +11,7 @@ class PlayStream {
 		let newStreamItem = AVPlayerItem(url: streamUrl)
 		let data = StreamInfo.shared
 
+		PodcastPlayer.shared.deactivate()
 		data.audioPlayer.replaceCurrentItem(with: newStreamItem)
 		data.currentStream = streamNumber
 		data.currentStreamUrl = streamUrl

@@ -7,6 +7,7 @@ import SwiftUI
 
 struct FaviconView: View {
 	let station: RadioStation
+	var fallbackSystemImage = "antenna.radiowaves.left.and.right"
 	@State private var favicon: NSImage? = nil
 	@State private var faviconNeedsBackground = false
 	@State private var faviconNeedsInset = false
@@ -63,7 +64,7 @@ struct FaviconView: View {
 
 	private func loadFallbackIcon() {
 		fallbackIcon = NSImage(
-			systemSymbolName: "antenna.radiowaves.left.and.right",
+			systemSymbolName: fallbackSystemImage,
 			accessibilityDescription: nil
 		)
 	}

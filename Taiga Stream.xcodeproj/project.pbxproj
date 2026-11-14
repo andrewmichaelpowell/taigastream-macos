@@ -48,6 +48,7 @@
 		3E690E0E2FB017B7006C88F6 /* Exceptions for "Taiga Stream" folder in "Taiga Stream Widget" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Localizable.xcstrings,
 				Metadata/MetadataProvider.swift,
 				Metadata/Providers/ABCRadioProvider.swift,
 				Metadata/Providers/AudioAddictProvider.swift,
@@ -69,10 +70,14 @@
 				Metadata/Providers/VirginRadioRomaniaProvider.swift,
 				Metadata/Providers/VRTRadioProvider.swift,
 				Metadata/Providers/ZenoFMProvider.swift,
+				Models/Podcast.swift,
 				Models/RadioStation.swift,
 				Networking/URLRequest.swift,
 				Playback/PlayStream.swift,
+				Playback/PodcastPlayer.swift,
 				Playback/StreamInfo.swift,
+				Podcasts/PodcastFeedParser.swift,
+				Podcasts/PodcastLibrary.swift,
 			);
 			target = 3E690D932FAE0E04006C88F6 /* Taiga Stream Widget */;
 		};
@@ -445,7 +450,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Taiga Stream/Taiga Stream.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 925F4PY4UL;
 				ENABLE_APP_SANDBOX = YES;
@@ -461,7 +466,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 2026.11.08;
+				MARKETING_VERSION = 2026.11.16;
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.andrewmichaelpowell.taigastream;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -481,7 +486,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Taiga Stream/Taiga Stream.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 925F4PY4UL;
 				ENABLE_APP_SANDBOX = YES;
@@ -497,7 +502,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 2026.11.08;
+				MARKETING_VERSION = 2026.11.16;
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.andrewmichaelpowell.taigastream;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -517,7 +522,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Taiga Stream Widget/Taiga Stream Widget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 925F4PY4UL;
 				ENABLE_APP_SANDBOX = YES;
@@ -532,7 +537,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 2026.11.08;
+				MARKETING_VERSION = 2026.11.16;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.andrewmichaelpowell.taigastream.Taiga-Stream-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
@@ -552,7 +557,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Taiga Stream Widget/Taiga Stream Widget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 925F4PY4UL;
 				ENABLE_APP_SANDBOX = YES;
@@ -567,7 +572,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 2026.11.08;
+				MARKETING_VERSION = 2026.11.16;
 				PRODUCT_BUNDLE_IDENTIFIER = "xyz.andrewmichaelpowell.taigastream.Taiga-Stream-Widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;

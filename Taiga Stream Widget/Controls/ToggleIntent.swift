@@ -17,3 +17,17 @@ struct ToggleIntent: SetValueIntent, AudioPlaybackIntent {
 		return .result()
 	}
 }
+
+struct PodcastToggleIntent: SetValueIntent, AudioPlaybackIntent {
+	static let title: LocalizedStringResource = "Play Podcast"
+	@Parameter(title: "Podcast Number") var podcastNumber: Int
+	@Parameter(title: "Podcast Status") var value: Bool
+
+	init(podcastNumber: Int) { self.podcastNumber = podcastNumber }
+	init() { self.podcastNumber = 1 }
+
+	@MainActor func perform() async throws -> some IntentResult {
+		await PodcastPlayer.shared.play(podcastNumber: podcastNumber)
+		return .result()
+	}
+}

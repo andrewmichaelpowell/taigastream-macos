@@ -6,6 +6,8 @@ import Foundation
 import SwiftUI
 import WidgetKit
 
+private let controlGreen = Color(red: 4 / 255, green: 80 / 255, blue: 48 / 255)
+
 private func configureControl(streamNumber: Int)
 	-> some ControlWidgetConfiguration
 {
@@ -24,11 +26,38 @@ private func configureControl(streamNumber: Int)
 		) {
 			Label(
 				"Stream \(streamNumber)",
-				systemImage: "\(streamNumber).circle"
+				image: "taiga.radio.\(streamNumber)"
 			)
 		}
+		.tint(controlGreen)
 	}
 	.displayName("Stream \(streamNumber)")
+}
+
+private func configurePodcastControl(podcastNumber: Int)
+	-> some ControlWidgetConfiguration
+{
+	let kind = "xyz.andrewmichaelpowell.taigastream.podcast\(podcastNumber)"
+	return StaticControlConfiguration(kind: kind) {
+		let streamState = UserDefaults(
+			suiteName: "group.xyz.andrewmichaelpowell.taigastream"
+		)
+		let podcastStatus =
+			(streamState?.bool(forKey: "PlayingKey") ?? false)
+			&& (streamState?.integer(forKey: "CurrentPodcastKey") ?? 0)
+				== podcastNumber
+		return ControlWidgetToggle(
+			isOn: podcastStatus,
+			action: PodcastToggleIntent(podcastNumber: podcastNumber)
+		) {
+			Label(
+				"Podcast \(podcastNumber)",
+				image: "taiga.podcast.\(podcastNumber)"
+			)
+		}
+		.tint(controlGreen)
+	}
+	.displayName("Podcast \(podcastNumber)")
 }
 
 struct Control1: ControlWidget {
@@ -189,5 +218,165 @@ struct Control31: ControlWidget {
 struct Control32: ControlWidget {
 	var body: some ControlWidgetConfiguration {
 		configureControl(streamNumber: 32)
+	}
+}
+struct PodcastControl1: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 1)
+	}
+}
+struct PodcastControl2: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 2)
+	}
+}
+struct PodcastControl3: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 3)
+	}
+}
+struct PodcastControl4: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 4)
+	}
+}
+struct PodcastControl5: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 5)
+	}
+}
+struct PodcastControl6: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 6)
+	}
+}
+struct PodcastControl7: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 7)
+	}
+}
+struct PodcastControl8: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 8)
+	}
+}
+struct PodcastControl9: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 9)
+	}
+}
+struct PodcastControl10: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 10)
+	}
+}
+struct PodcastControl11: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 11)
+	}
+}
+struct PodcastControl12: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 12)
+	}
+}
+struct PodcastControl13: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 13)
+	}
+}
+struct PodcastControl14: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 14)
+	}
+}
+struct PodcastControl15: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 15)
+	}
+}
+struct PodcastControl16: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 16)
+	}
+}
+struct PodcastControl17: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 17)
+	}
+}
+struct PodcastControl18: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 18)
+	}
+}
+struct PodcastControl19: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 19)
+	}
+}
+struct PodcastControl20: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 20)
+	}
+}
+struct PodcastControl21: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 21)
+	}
+}
+struct PodcastControl22: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 22)
+	}
+}
+struct PodcastControl23: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 23)
+	}
+}
+struct PodcastControl24: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 24)
+	}
+}
+struct PodcastControl25: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 25)
+	}
+}
+struct PodcastControl26: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 26)
+	}
+}
+struct PodcastControl27: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 27)
+	}
+}
+struct PodcastControl28: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 28)
+	}
+}
+struct PodcastControl29: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 29)
+	}
+}
+struct PodcastControl30: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 30)
+	}
+}
+struct PodcastControl31: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 31)
+	}
+}
+struct PodcastControl32: ControlWidget {
+	var body: some ControlWidgetConfiguration {
+		configurePodcastControl(podcastNumber: 32)
 	}
 }
