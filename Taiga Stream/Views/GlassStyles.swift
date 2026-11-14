@@ -11,12 +11,7 @@ extension Color {
 	static let taigaGreenIcon = Color(
 		nsColor: NSColor(name: nil) { appearance in
 			appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-				? NSColor(
-					red: 111 / 255,
-					green: 199 / 255,
-					blue: 160 / 255,
-					alpha: 1
-				)
+				? NSColor.white
 				: NSColor(
 					red: 4 / 255,
 					green: 80 / 255,
