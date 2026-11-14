@@ -17,7 +17,7 @@ struct RadioBrowserSearchSheet: View {
 	private let pageSize = 50
 
 	var body: some View {
-		NavigationStack {
+		VStack(spacing: 0) {
 			VStack(spacing: 0) {
 				VStack(spacing: 8) {
 					HStack {
@@ -35,7 +35,7 @@ struct RadioBrowserSearchSheet: View {
 					.padding()
 					.background(
 						RoundedRectangle(cornerRadius: 10)
-							.fill(Color.slot)
+							.fill(.thinMaterial)
 					)
 
 					Button(action: performSearch) {
@@ -57,10 +57,7 @@ struct RadioBrowserSearchSheet: View {
 							Spacer()
 						}
 						.padding()
-						.background(
-							RoundedRectangle(cornerRadius: 10)
-								.fill(Color.slot)
-						)
+						.sheetButtonGlass()
 					}
 					.buttonStyle(.plain)
 					.disabled(isLoading || searchName.isEmpty)
@@ -74,10 +71,7 @@ struct RadioBrowserSearchSheet: View {
 							Spacer()
 						}
 						.padding()
-						.background(
-							RoundedRectangle(cornerRadius: 10)
-								.fill(Color.slot)
-						)
+						.sheetButtonGlass()
 					}
 					.buttonStyle(.plain)
 				}
@@ -123,11 +117,15 @@ struct RadioBrowserSearchSheet: View {
 						}
 					}
 					.listStyle(.plain)
+					.scrollContentBackground(.hidden)
 				}
 			}
-			.navigationTitle("Search")
+			.safeAreaInset(edge: .top, spacing: 0) {
+				SheetTitle(Text("Search"))
+			}
 		}
 		.frame(width: 384, height: 580)
+		.presentationBackground { NowPlayingBackground() }
 	}
 
 	private var allFieldsEmpty: Bool { searchName.isEmpty }

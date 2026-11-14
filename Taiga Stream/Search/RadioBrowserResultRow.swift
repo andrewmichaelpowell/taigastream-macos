@@ -24,13 +24,13 @@ struct RadioBrowserResultRow: View {
 				if !station.state.isEmpty {
 					Text(station.state)
 						.font(.caption)
-						.foregroundColor(Color(nsColor: .tertiaryLabelColor))
+						.foregroundColor(.secondary)
 						.lineLimit(1)
 				}
 				if !station.country.isEmpty {
 					Text(station.country)
 						.font(.caption)
-						.foregroundColor(Color(nsColor: .tertiaryLabelColor))
+						.foregroundColor(.secondary)
 						.lineLimit(1)
 				}
 				if !station.tags.isEmpty {
@@ -39,19 +39,19 @@ struct RadioBrowserResultRow: View {
 							.joined(separator: ", ")
 					)
 					.font(.caption)
-					.foregroundColor(Color(nsColor: .tertiaryLabelColor))
+					.foregroundColor(.secondary)
 					.lineLimit(1)
 				}
 				if station.bitrate > 0 {
 					Text("\(station.bitrate) kbps")
 						.font(.caption2)
-						.foregroundColor(Color(nsColor: .tertiaryLabelColor))
+						.foregroundColor(.secondary)
 				}
 			}
 			Spacer()
 			Image(systemName: "chevron.right")
 				.font(.caption)
-				.foregroundColor(Color(nsColor: .tertiaryLabelColor))
+				.foregroundColor(.secondary)
 		}
 		.padding(.vertical, 4)
 	}

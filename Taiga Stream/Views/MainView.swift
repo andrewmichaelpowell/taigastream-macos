@@ -44,8 +44,8 @@ private struct PageChooser: View {
 				.frame(width: Self.itemWidth, height: Self.itemHeight)
 				.offset(x: selection == .radio ? 0 : Self.itemWidth)
 			HStack(spacing: 0) {
-				item(.radio, symbol: "radio.fill", label: Text("Radio"))
-				item(.podcasts, symbol: "mic.fill", label: Text("Podcasts"))
+				item(.radio, symbol: "radio", label: Text("Radio"))
+				item(.podcasts, symbol: "mic", label: Text("Podcasts"))
 			}
 		}
 		.padding(Self.inset)
@@ -64,7 +64,9 @@ private struct PageChooser: View {
 		} label: {
 			Image(systemName: symbol)
 				.font(.title2)
-				.foregroundStyle(isSelected ? Color.taigaGreenIcon : Color.primary)
+				.foregroundStyle(
+					isSelected ? Color.taigaGreenIcon : Color.primary
+				)
 				.frame(width: Self.itemWidth, height: Self.itemHeight)
 				.contentShape(Capsule())
 		}

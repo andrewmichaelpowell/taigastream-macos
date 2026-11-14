@@ -4,7 +4,6 @@
 import Foundation
 import SwiftUI
 
-/// A full-width sheet button matching the radio sheets.
 struct SheetButton: View {
 	let title: LocalizedStringResource
 	var role: ButtonRole? = nil
@@ -32,16 +31,13 @@ struct SheetButton: View {
 				Spacer()
 			}
 			.padding()
-			.background(
-				RoundedRectangle(cornerRadius: 10).fill(Color.slot)
-			)
+			.sheetButtonGlass()
 		}
 		.buttonStyle(.plain)
 		.disabled(!isEnabled)
 	}
 }
 
-/// A text field row matching the radio sheets.
 struct SheetTextField: View {
 	let systemImage: String
 	@Binding var text: String
@@ -58,7 +54,7 @@ struct SheetTextField: View {
 				.onSubmit(onSubmit)
 		}
 		.padding()
-		.background(RoundedRectangle(cornerRadius: 10).fill(Color.slot))
+		.background(RoundedRectangle(cornerRadius: 10).fill(.thinMaterial))
 	}
 }
 
@@ -74,7 +70,7 @@ struct PodcastOptionsSheet: View {
 	var podcast: Podcast { library.podcast(at: index) }
 
 	var body: some View {
-		NavigationStack {
+		VStack(spacing: 0) {
 			VStack(spacing: 0) {
 				VStack(spacing: 8) {
 					SheetButton(title: "Search") {
@@ -104,9 +100,10 @@ struct PodcastOptionsSheet: View {
 				.padding()
 				Spacer()
 			}
-			.navigationTitle("Podcast \(index + 1)")
+			.safeAreaInset(edge: .top, spacing: 0) { SheetTitle(Text("Podcast \(index + 1)")) }
 		}
 		.frame(width: 320)
+		.presentationBackground { NowPlayingBackground() }
 	}
 }
 
@@ -132,7 +129,7 @@ struct PodcastURLSheet: View {
 	}
 
 	var body: some View {
-		NavigationStack {
+		VStack(spacing: 0) {
 			VStack(spacing: 0) {
 				VStack(spacing: 8) {
 					SheetTextField(systemImage: "mic", text: $manualName)
@@ -148,9 +145,10 @@ struct PodcastURLSheet: View {
 				.padding()
 				Spacer()
 			}
-			.navigationTitle("Enter URL")
+			.safeAreaInset(edge: .top, spacing: 0) { SheetTitle(Text("Enter URL")) }
 		}
 		.frame(width: 384, height: 580)
+		.presentationBackground { NowPlayingBackground() }
 	}
 
 	private func save() {
@@ -184,7 +182,7 @@ struct PodcastSearchSheet: View {
 	}
 
 	var body: some View {
-		NavigationStack {
+		VStack(spacing: 0) {
 			VStack(spacing: 0) {
 				VStack(spacing: 8) {
 					SheetTextField(
@@ -213,11 +211,13 @@ struct PodcastSearchSheet: View {
 							.onTapGesture { select(result) }
 							}
 					.listStyle(.plain)
+					.scrollContentBackground(.hidden)
 					}
 			}
-			.navigationTitle("Search")
+			.safeAreaInset(edge: .top, spacing: 0) { SheetTitle(Text("Search")) }
 		}
 		.frame(width: 384, height: 580)
+		.presentationBackground { NowPlayingBackground() }
 	}
 
 	private func performSearch() {
@@ -265,13 +265,13 @@ struct PodcastSearchResultRow: View {
 				if !result.author.isEmpty {
 					Text(result.author)
 						.font(.caption)
-						.foregroundColor(Color(nsColor: .tertiaryLabelColor))
+						.foregroundColor(.secondary)
 						.lineLimit(1)
 				}
 				if !result.genre.isEmpty {
 					Text(result.genre)
 						.font(.caption)
-						.foregroundColor(Color(nsColor: .tertiaryLabelColor))
+						.foregroundColor(.secondary)
 						.lineLimit(1)
 				}
 			}
@@ -297,15 +297,16 @@ struct EpisodePickerSheet: View {
 	}
 
 	var body: some View {
-		NavigationStack {
+		VStack(spacing: 0) {
 			VStack(spacing: 0) {
 				SheetButton(title: "Cancel") { isPresented = false }
 					.padding()
 				content
 			}
-			.navigationTitle(podcast?.name ?? String(localized: "Episodes"))
+			.safeAreaInset(edge: .top, spacing: 0) { SheetTitle(Text(podcast?.name ?? String(localized: "Episodes"))) }
 		}
 		.frame(width: 384, height: 580)
+		.presentationBackground { NowPlayingBackground() }
 		.task {
 			if let podcast, library.feeds[podcastID] == nil {
 				await library.refreshFeed(for: podcast)
@@ -347,6 +348,7 @@ struct EpisodePickerSheet: View {
 					.id(episode.id)
 				}
 				.listStyle(.plain)
+				.scrollContentBackground(.hidden)
 				.onAppear {
 					if let selectedID { proxy.scrollTo(selectedID, anchor: .center) }
 				}
@@ -414,7 +416,7 @@ private struct EpisodeRow: View {
 				if !details.isEmpty {
 					Text(details)
 						.font(.caption)
-						.foregroundColor(Color(nsColor: .tertiaryLabelColor))
+						.foregroundColor(.secondary)
 						.lineLimit(1)
 				}
 				if let duration = episode.duration, duration > 0, position > 0 {

@@ -42,6 +42,18 @@ extension View {
 		}
 	}
 
+	@ViewBuilder
+	func sheetButtonGlass() -> some View {
+		if #available(macOS 26.0, *) {
+			glassEffect(
+				.regular.interactive(),
+				in: RoundedRectangle(cornerRadius: 10)
+			)
+		} else {
+			background(.thinMaterial, in: RoundedRectangle(cornerRadius: 10))
+		}
+	}
+
 	func frostedRowBackground() -> some View {
 		background(.thinMaterial, in: RoundedRectangle(cornerRadius: 10))
 	}
@@ -51,5 +63,21 @@ extension View {
 			.dragPreview,
 			RoundedRectangle(cornerRadius: 16).inset(by: -6)
 		)
+	}
+}
+
+struct SheetTitle: View {
+	let text: Text
+
+	init(_ text: Text) { self.text = text }
+
+	var body: some View {
+		text
+			.font(.headline)
+			.lineLimit(1)
+			.frame(maxWidth: .infinity)
+			.padding(.top, 16)
+			.padding(.bottom, 4)
+			.padding(.horizontal)
 	}
 }

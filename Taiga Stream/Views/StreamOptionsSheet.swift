@@ -16,7 +16,7 @@ struct StreamOptionsSheet: View {
 	var station: RadioStation { streamInfo.station(at: index) }
 
 	var body: some View {
-		NavigationStack {
+		VStack(spacing: 0) {
 			VStack(spacing: 8) {
 				optionButton("Search") {
 					isPresented = false
@@ -43,9 +43,12 @@ struct StreamOptionsSheet: View {
 				}
 			}
 			.padding()
-			.navigationTitle("Stream \(index + 1)")
+			.safeAreaInset(edge: .top, spacing: 0) {
+				SheetTitle(Text("Stream \(index + 1)"))
+			}
 		}
 		.frame(width: 320)
+		.presentationBackground { NowPlayingBackground() }
 	}
 
 	@ViewBuilder
@@ -65,10 +68,7 @@ struct StreamOptionsSheet: View {
 				Spacer()
 			}
 			.padding()
-			.background(
-				RoundedRectangle(cornerRadius: 10)
-					.fill(Color.slot)
-			)
+			.sheetButtonGlass()
 		}
 		.buttonStyle(.plain)
 	}

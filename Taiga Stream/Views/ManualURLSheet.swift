@@ -27,7 +27,7 @@ struct ManualURLSheet: View {
 	}
 
 	var body: some View {
-		NavigationStack {
+		VStack(spacing: 0) {
 			VStack(spacing: 0) {
 				VStack(spacing: 8) {
 					HStack {
@@ -42,7 +42,7 @@ struct ManualURLSheet: View {
 					.padding()
 					.background(
 						RoundedRectangle(cornerRadius: 10)
-							.fill(Color.slot)
+							.fill(.thinMaterial)
 					)
 					HStack {
 						Image(systemName: "link")
@@ -57,7 +57,7 @@ struct ManualURLSheet: View {
 					.padding()
 					.background(
 						RoundedRectangle(cornerRadius: 10)
-							.fill(Color.slot)
+							.fill(.thinMaterial)
 					)
 
 					Button(action: save) {
@@ -73,10 +73,7 @@ struct ManualURLSheet: View {
 							Spacer()
 						}
 						.padding()
-						.background(
-							RoundedRectangle(cornerRadius: 10)
-								.fill(Color.slot)
-						)
+						.sheetButtonGlass()
 					}
 					.buttonStyle(.plain)
 					.disabled(!isValidUrl)
@@ -90,19 +87,19 @@ struct ManualURLSheet: View {
 							Spacer()
 						}
 						.padding()
-						.background(
-							RoundedRectangle(cornerRadius: 10)
-								.fill(Color.slot)
-						)
+						.sheetButtonGlass()
 					}
 					.buttonStyle(.plain)
 				}
 				.padding()
 				Spacer()
 			}
-			.navigationTitle("Enter URL")
+			.safeAreaInset(edge: .top, spacing: 0) {
+				SheetTitle(Text("Enter URL"))
+			}
 		}
 		.frame(width: 384, height: 580)
+		.presentationBackground { NowPlayingBackground() }
 	}
 
 	private func save() {
