@@ -48,7 +48,6 @@ struct StreamOptionsSheet: View {
 			}
 		}
 		.frame(width: 320)
-		.presentationBackground { NowPlayingBackground() }
 	}
 
 	@ViewBuilder

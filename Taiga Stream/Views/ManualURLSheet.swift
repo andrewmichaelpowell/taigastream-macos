@@ -99,7 +99,6 @@ struct ManualURLSheet: View {
 			}
 		}
 		.frame(width: 384, height: 580)
-		.presentationBackground { NowPlayingBackground() }
 	}
 
 	private func save() {

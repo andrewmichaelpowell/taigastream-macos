@@ -38,6 +38,8 @@ public class StreamInfo: NSObject, ObservableObject {
 
 	@Published var stations: [RadioStation] = StreamInfo.loadStations()
 	@Published private(set) var nowPlayingArtwork: NSImage?
+	@Published private(set) var radioTitle = ""
+	@Published private(set) var radioArtist = ""
 
 	var stream: [String] { stations.map(\.url) }
 
@@ -326,10 +328,13 @@ public class StreamInfo: NSObject, ObservableObject {
 		nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] =
 			isPlaying ? 1.0 : 0.0
 		nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = 1.0
-		nowPlayingInfo[MPMediaItemPropertyArtist] =
-			artist.isEmpty ? "Taiga Stream" : artist
-		nowPlayingInfo[MPMediaItemPropertyTitle] =
+		let shownArtist = artist.isEmpty ? "Taiga Stream" : artist
+		let shownTitle =
 			title.isEmpty ? fallbackTitle(forSlot: currentStream) : title
+		nowPlayingInfo[MPMediaItemPropertyArtist] = shownArtist
+		nowPlayingInfo[MPMediaItemPropertyTitle] = shownTitle
+		if radioArtist != shownArtist { radioArtist = shownArtist }
+		if radioTitle != shownTitle { radioTitle = shownTitle }
 		if let existingArtwork {
 			nowPlayingInfo[MPMediaItemPropertyArtwork] = existingArtwork
 		}
@@ -362,6 +367,8 @@ public class StreamInfo: NSObject, ObservableObject {
 			forSlot: self.currentStream
 		)
 		stoppedInfo[MPMediaItemPropertyArtist] = "Taiga Stream"
+		radioTitle = fallbackTitle(forSlot: currentStream)
+		radioArtist = "Taiga Stream"
 		fallbackRequestID += 1
 		let requestID = fallbackRequestID
 		let faviconString = stationFaviconUrl(forSlot: currentStream)

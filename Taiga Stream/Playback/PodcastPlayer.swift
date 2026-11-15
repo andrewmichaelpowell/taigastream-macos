@@ -19,6 +19,8 @@ final class PodcastPlayer: ObservableObject {
 	@Published private(set) var activeEpisode: PodcastEpisode?
 	@Published private(set) var position: Double = 0
 	@Published private(set) var duration: Double?
+	/// True while the active episode is loading or rebuffering.
+	@Published private(set) var isBuffering = false
 
 	private var timeObserver: Any?
 	private var itemCancellables = Set<AnyCancellable>()
@@ -232,6 +234,7 @@ final class PodcastPlayer: ObservableObject {
 		removeItemObservers()
 		activePodcastID = nil
 		activeEpisode = nil
+		isBuffering = false
 		duration = nil
 		position = 0
 		currentPodcast = 0
@@ -281,6 +284,18 @@ final class PodcastPlayer: ObservableObject {
 				if self.duration != value.seconds {
 					self.duration = value.seconds
 					self.updateNowPlaying()
+				}
+			}
+			.store(in: &itemCancellables)
+
+		streamInfo.audioPlayer.publisher(for: \.timeControlStatus)
+			.receive(on: DispatchQueue.main)
+			.sink { [weak self] status in
+				guard let self else { return }
+				let buffering =
+					self.isActive && status == .waitingToPlayAtSpecifiedRate
+				if self.isBuffering != buffering {
+					self.isBuffering = buffering
 				}
 			}
 			.store(in: &itemCancellables)

@@ -19,11 +19,13 @@ struct MainView: View {
 			}
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
+		.safeAreaInset(edge: .top, spacing: 0) {
+			NowPlayingPanel()
+		}
 		.safeAreaInset(edge: .bottom) {
 			PageChooser(selection: $selectedTab)
 				.padding(.bottom, 12)
 		}
-		.background { NowPlayingBackground() }
 		.toolbarBackgroundVisibility(.hidden, for: .windowToolbar)
 		.toolbar(removing: .title)
 		.clipped()
@@ -40,7 +42,7 @@ private struct PageChooser: View {
 	var body: some View {
 		ZStack(alignment: .leading) {
 			Capsule()
-				.fill(Color.primary.opacity(0.1))
+				.selectionFill()
 				.frame(width: Self.itemWidth, height: Self.itemHeight)
 				.offset(x: selection == .radio ? 0 : Self.itemWidth)
 			HStack(spacing: 0) {
@@ -64,15 +66,25 @@ private struct PageChooser: View {
 		} label: {
 			Image(systemName: symbol)
 				.font(.title2)
-				.foregroundStyle(
-					isSelected ? Color.taigaGreenIcon : Color.primary
-				)
+				.foregroundStyle(isSelected ? Color.white : Color.primary)
 				.frame(width: Self.itemWidth, height: Self.itemHeight)
 				.contentShape(Capsule())
 		}
 		.buttonStyle(.plain)
 		.accessibilityLabel(label)
 		.accessibilityAddTraits(isSelected ? .isSelected : [])
+	}
+}
+
+extension Capsule {
+	@ViewBuilder
+	fileprivate func selectionFill() -> some View {
+		if #available(macOS 26.0, *) {
+			fill(Color.clear)
+				.glassEffect(.regular.tint(.taigaGreen), in: Capsule())
+		} else {
+			fill(Color.taigaGreen)
+		}
 	}
 }
 

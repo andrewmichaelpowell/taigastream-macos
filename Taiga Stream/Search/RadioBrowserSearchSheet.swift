@@ -125,7 +125,6 @@ struct RadioBrowserSearchSheet: View {
 			}
 		}
 		.frame(width: 384, height: 580)
-		.presentationBackground { NowPlayingBackground() }
 	}
 
 	private var allFieldsEmpty: Bool { searchName.isEmpty }

@@ -7,19 +7,6 @@ import SwiftUI
 
 extension Color {
 	static let taigaGreen = Color(red: 4 / 255, green: 80 / 255, blue: 48 / 255)
-
-	static let taigaGreenIcon = Color(
-		nsColor: NSColor(name: nil) { appearance in
-			appearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
-				? NSColor.white
-				: NSColor(
-					red: 4 / 255,
-					green: 80 / 255,
-					blue: 48 / 255,
-					alpha: 1
-				)
-		}
-	)
 }
 
 extension View {

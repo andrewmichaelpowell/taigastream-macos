@@ -100,10 +100,11 @@ struct PodcastOptionsSheet: View {
 				.padding()
 				Spacer()
 			}
-			.safeAreaInset(edge: .top, spacing: 0) { SheetTitle(Text("Podcast \(index + 1)")) }
+			.safeAreaInset(edge: .top, spacing: 0) {
+				SheetTitle(Text("Podcast \(index + 1)"))
+			}
 		}
 		.frame(width: 320)
-		.presentationBackground { NowPlayingBackground() }
 	}
 }
 
@@ -139,16 +140,21 @@ struct PodcastURLSheet: View {
 						isURL: true,
 						onSubmit: save
 					)
-					SheetButton(title: "Save", isEnabled: isValidUrl, action: save)
+					SheetButton(
+						title: "Save",
+						isEnabled: isValidUrl,
+						action: save
+					)
 					SheetButton(title: "Cancel") { isPresented = false }
 				}
 				.padding()
 				Spacer()
 			}
-			.safeAreaInset(edge: .top, spacing: 0) { SheetTitle(Text("Enter URL")) }
+			.safeAreaInset(edge: .top, spacing: 0) {
+				SheetTitle(Text("Enter URL"))
+			}
 		}
 		.frame(width: 384, height: 580)
-		.presentationBackground { NowPlayingBackground() }
 	}
 
 	private func save() {
@@ -209,15 +215,16 @@ struct PodcastSearchSheet: View {
 						PodcastSearchResultRow(result: result)
 							.contentShape(Rectangle())
 							.onTapGesture { select(result) }
-							}
+					}
 					.listStyle(.plain)
 					.scrollContentBackground(.hidden)
-					}
+				}
 			}
-			.safeAreaInset(edge: .top, spacing: 0) { SheetTitle(Text("Search")) }
+			.safeAreaInset(edge: .top, spacing: 0) {
+				SheetTitle(Text("Search"))
+			}
 		}
 		.frame(width: 384, height: 580)
-		.presentationBackground { NowPlayingBackground() }
 	}
 
 	private func performSearch() {
@@ -303,10 +310,11 @@ struct EpisodePickerSheet: View {
 					.padding()
 				content
 			}
-			.safeAreaInset(edge: .top, spacing: 0) { SheetTitle(Text(podcast?.name ?? String(localized: "Episodes"))) }
+			.safeAreaInset(edge: .top, spacing: 0) {
+				SheetTitle(Text(podcast?.name ?? String(localized: "Episodes")))
+			}
 		}
 		.frame(width: 384, height: 580)
-		.presentationBackground { NowPlayingBackground() }
 		.task {
 			if let podcast, library.feeds[podcastID] == nil {
 				await library.refreshFeed(for: podcast)
@@ -350,7 +358,9 @@ struct EpisodePickerSheet: View {
 				.listStyle(.plain)
 				.scrollContentBackground(.hidden)
 				.onAppear {
-					if let selectedID { proxy.scrollTo(selectedID, anchor: .center) }
+					if let selectedID {
+						proxy.scrollTo(selectedID, anchor: .center)
+					}
 				}
 			}
 		}
