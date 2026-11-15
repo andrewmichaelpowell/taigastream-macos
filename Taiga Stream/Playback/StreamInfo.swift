@@ -375,13 +375,17 @@ public class StreamInfo: NSObject, ObservableObject {
 		let cachedFavicon = faviconString.flatMap { faviconArtworkCache[$0] }
 		if let image = cachedFavicon ?? appIconImage() {
 			stoppedInfo[MPMediaItemPropertyArtwork] = Self.mediaArtwork(image)
+			showArtwork(image)
 		}
 		MPNowPlayingInfoCenter.default().nowPlayingInfo = stoppedInfo
 
 		guard let faviconString, cachedFavicon == nil else { return }
 		loadFaviconArtwork(faviconString) { [weak self] composed in
 			guard let self, let composed, self.fallbackRequestID == requestID,
-				!self.isPlaying,
+				!self.isPlaying
+			else { return }
+			self.showArtwork(composed)
+			guard
 				var nowPlayingInfo = MPNowPlayingInfoCenter.default()
 					.nowPlayingInfo
 			else { return }
